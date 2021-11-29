@@ -49,9 +49,13 @@ public class ReviewController {
             model.addAttribute("review", reviewService.findReviewById(id));
             model.addAttribute("photos", reviewPhotoService.findPhotos(id));
             model.addAttribute("comments", commentsService.findCommentsReview(id));
-            model.addAttribute("likes",userReviewRatingService.likesCount(id));
-            model.addAttribute("rating",userReviewRatingService.usersRating(id));
-            model.addAttribute("counts",userReviewRatingService.findAllByReviewId(id).size());
+            model.addAttribute("likes", userReviewRatingService.likesCount(id));
+            String result = userReviewRatingService.usersRating(id);
+            if (result.equals("NaN"))
+                model.addAttribute("rating", "0");
+            else
+                model.addAttribute("rating", result);
+            model.addAttribute("counts", userReviewRatingService.findAllByReviewId(id).size());
             return "review";
         }
         return "redirect:/";
@@ -65,28 +69,42 @@ public class ReviewController {
                                 @AuthenticationPrincipal User user,
                                 Model model) {
         @Nullable
-        UserReviewRating userReviewRating = userReviewRatingService.findByUser(user);
+        UserReviewRating userReviewRating = userReviewRatingService.findByUser(user,id);
 
         if (!Strings.isEmpty(liked) && !Strings.isEmpty(rating) && userReviewRating == null) {
             userReviewRatingService.estimate(user, rating, liked, reviewService.findReviewById(id));
         }
-//        if (!(userReviewRating == null)){
-//            model.addAttribute("rated","U just already rate this review");
-//        }
-        model.addAttribute("review", reviewService.findReviewById(id));
-        model.addAttribute("photos", reviewPhotoService.findPhotos(id));
-        if (Strings.isEmpty(text) && Strings.isEmpty(liked) && Strings.isEmpty(rating)) {
-            model.addAttribute("empty", "Comment is empty!");
-            model.addAttribute("comments", commentsService.findCommentsReview(id));
-            return "review";
-        }
+
         if (!Strings.isEmpty(text))
             commentsService.addComment(user, reviewService.findReviewById(id), text);
 
+        if (Strings.isEmpty(text) && Strings.isEmpty(liked) && Strings.isEmpty(rating)) {
+
+            model.addAttribute("empty", "U dont");
+            model.addAttribute("comments", commentsService.findCommentsReview(id));
+            model.addAttribute("review", reviewService.findReviewById(id));
+            model.addAttribute("photos", reviewPhotoService.findPhotos(id));
+            model.addAttribute("likes", userReviewRatingService.likesCount(id));
+            model.addAttribute("counts", userReviewRatingService.findAllByReviewId(id).size());
+            String result = userReviewRatingService.usersRating(id);
+            if (result.equals("NaN"))
+                model.addAttribute("rating", "0");
+            else
+                model.addAttribute("rating", result);
+            return "review";
+        }
+
+        String result = userReviewRatingService.usersRating(id);
+        if (result.equals("NaN"))
+            model.addAttribute("rating", "0");
+        else
+            model.addAttribute("rating", result);
+
+        model.addAttribute("review", reviewService.findReviewById(id));
+        model.addAttribute("photos", reviewPhotoService.findPhotos(id));
         model.addAttribute("comments", commentsService.findCommentsReview(id));
-        model.addAttribute("likes",userReviewRatingService.likesCount(id));
-        model.addAttribute("rating",userReviewRatingService.usersRating(id));
-        model.addAttribute("counts",userReviewRatingService.findAllByReviewId(id).size());
+        model.addAttribute("likes", userReviewRatingService.likesCount(id));
+        model.addAttribute("counts", userReviewRatingService.findAllByReviewId(id).size());
 
         return "review";
     }

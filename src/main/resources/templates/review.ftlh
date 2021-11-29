@@ -129,7 +129,7 @@
                 <ol class="list-group list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
-                            <div class="fw-bold"><strong style="color: dodgerblue">${review.getAuthorName()}</strong>
+                            <div class="fw-bold"><strong style="color: dodgerblue">${comment.getUser().getUsername()}</strong>
                             </div>
                             <a>${comment.text}</a>
                         </div>

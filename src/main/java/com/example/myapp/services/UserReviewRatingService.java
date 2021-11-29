@@ -25,8 +25,8 @@ public class UserReviewRatingService {
         userReviewRatingRepo.save(userReviewRating);
     }
 
-    public UserReviewRating findByUser(User user){
-        return userReviewRatingRepo.findByUser(user);
+    public UserReviewRating findByUser(User user,Long id){
+        return userReviewRatingRepo.findByUserAndReviewId(user,id);
     }
 
     public Integer likesCount(Long id){
