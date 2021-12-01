@@ -1,26 +1,13 @@
 package com.example.myapp.services;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.Transformation;
-import com.cloudinary.utils.ObjectUtils;
 import com.example.myapp.entityes.Groups;
 import com.example.myapp.entityes.Review;
 import com.example.myapp.entityes.User;
-import com.example.myapp.repos.ReviewPhotoRepo;
 import com.example.myapp.repos.ReviewRepo;
-import org.codehaus.plexus.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
-
 
 @Service
 public class ReviewService {

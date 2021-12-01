@@ -1,11 +1,8 @@
 package com.example.myapp.controllers;
 
 
-import com.example.myapp.entityes.Groups;
 import com.example.myapp.entityes.User;
-
 import com.example.myapp.services.UserProfileService;
-import com.sun.istack.Nullable;
 import liquibase.util.file.FilenameUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/profile")

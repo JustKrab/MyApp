@@ -39,6 +39,16 @@
             <button class="btn btn-primary" type="submit">Sign Out</button>
         </form>
         </#if>
+        <#if !user??>
+        <form action="/login" method="get">
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+            <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+            <form action="/registration" method="get">
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <button class="btn btn-success" type="submit">Register</button>
+            </form>
+        </#if>
     </div>
 
 

@@ -2,9 +2,7 @@ package com.example.myapp.services;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.example.myapp.entityes.Groups;
 import com.example.myapp.entityes.Review;
-import com.example.myapp.entityes.Role;
 import com.example.myapp.entityes.User;
 import org.apache.logging.log4j.util.Strings;
 import org.codehaus.plexus.util.FileUtils;
@@ -14,10 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.beans.Encoder;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 

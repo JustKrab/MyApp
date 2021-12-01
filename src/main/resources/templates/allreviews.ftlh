@@ -12,6 +12,7 @@
                 <th>Group</th>
                 <th>Theme</th>
                 <th>Rating</th>
+<#--                <th>User Rating</th>-->
                 <th>Title</th>
                 <th>Author</th>
             </tr>
@@ -22,6 +23,7 @@
                     <td>${review.groups}</td>
                     <td><a class="d-inline-block text-truncate" style="max-width: 150px;">${review.theme}</a></td>
                     <td>${review.rating}/10</td>
+<#--                    <td>${review.getUserRating()}</td>-->
                     <td><a class="d-inline-block text-truncate" style="max-width: 150px; color: dodgerblue" href="/review/${review.id}">${review.title}</a></td>
                     <td><a style="color: dodgerblue" href="/profile/${review.authorName}">${review.authorName}</a></td>
                 </tr>

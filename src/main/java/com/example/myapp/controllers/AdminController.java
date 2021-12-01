@@ -5,7 +5,6 @@ import com.example.myapp.entityes.User;
 import com.example.myapp.services.ReviewPhotoService;
 import com.example.myapp.services.ReviewService;
 import com.example.myapp.services.UserProfileService;
-import com.example.myapp.services.UserService;
 import liquibase.util.file.FilenameUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;

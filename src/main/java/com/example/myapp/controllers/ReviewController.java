@@ -8,7 +8,6 @@ import com.example.myapp.services.CommentsService;
 import com.example.myapp.services.ReviewPhotoService;
 import com.example.myapp.services.ReviewService;
 import com.example.myapp.services.UserReviewRatingService;
-import com.sun.istack.NotNull;
 import com.sun.istack.Nullable;
 import liquibase.util.file.FilenameUtils;
 import org.apache.logging.log4j.util.Strings;
@@ -21,7 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -222,8 +224,8 @@ public class ReviewController {
     @GetMapping("/all")
     public String allReviews(Model model) {
 
-
         model.addAttribute("reviews", reviewService.findAll());
+
         return "allreviews";
     }
 }

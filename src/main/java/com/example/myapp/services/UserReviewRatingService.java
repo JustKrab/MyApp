@@ -5,7 +5,6 @@ import com.example.myapp.entityes.Review;
 import com.example.myapp.entityes.User;
 import com.example.myapp.entityes.UserReviewRating;
 import com.example.myapp.repos.UserReviewRatingRepo;
-import com.sun.istack.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
