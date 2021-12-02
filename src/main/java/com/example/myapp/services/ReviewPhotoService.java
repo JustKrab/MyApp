@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -31,30 +32,18 @@ public class ReviewPhotoService {
 
     public void uploadFile(MultipartFile file, Review review) throws IOException {
 
-        if (file != null && !file.getOriginalFilename().isEmpty()) {
-            File uploadDir = new File(uploadPath);
-
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
-
             String uuidFile = UUID.randomUUID().toString();
             String resultFilename = uuidFile + "." + file.getOriginalFilename();
 
-            file.transferTo(new File(uploadPath + "/" + resultFilename));
-
-
-            cloudinary.uploader().upload(uploadPath + "\\" + resultFilename,
+            cloudinary.uploader().upload(file.getBytes(),
                     ObjectUtils.asMap("use_filename", "true",
-                            "unique_filename", "false"));
-//            cloudinary.url().transformation(new Transformation().width(70).height(53).crop("scale")).imageTag(resultFilename);
-            FileUtils.fileDelete(uploadPath + "\\" + resultFilename);
+                            "unique_filename", "false","filename",resultFilename));
 
             ReviewPhotos reviewPhotos = new ReviewPhotos();
             reviewPhotos.setFilename(resultFilename);
             reviewPhotos.setReview(review);
             reviewPhotoRepo.save(reviewPhotos);
-        }
+
     }
 
     public List<ReviewPhotos> findPhotos(Long id){
@@ -62,8 +51,7 @@ public class ReviewPhotoService {
     }
 
     public void removePhotoBuReviewId(Long id) throws Exception {
-//        cloudinary.api().deleteResources("v1637790934/9320e6d3-a93f-42a2-8bd0-3015d4afbf2f.Gift.jpg"),
-//                ObjectUtils.emptyMap();
+
         reviewPhotoRepo.removeByReviewId(id);
     }
 }

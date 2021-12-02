@@ -3,6 +3,7 @@ package com.example.myapp.services;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.example.myapp.entityes.Review;
+import com.example.myapp.entityes.ReviewPhotos;
 import com.example.myapp.entityes.User;
 import org.apache.logging.log4j.util.Strings;
 import org.codehaus.plexus.util.FileUtils;
@@ -33,18 +34,18 @@ public class UserProfileService extends UserService {
     @Value("${upload.path}")
     private String uploadPath;
 
-    public List<Review> findReviewByAuthor(User user){
-      return  reviewService.findReviewByAuthor(user);
+    public List<Review> findReviewByAuthor(User user) {
+        return reviewService.findReviewByAuthor(user);
     }
 
-    public User findById(Long id){
+    public User findById(Long id) {
         return findUserById(id);
     }
 
-    public void editProfile(Long id,String username, String email, String password, MultipartFile file,User eUser) throws IOException {
+    public void editProfile(Long id, String username, String email, String password, MultipartFile file, User eUser) throws IOException {
 
         if (Strings.isEmpty(password))
-            password=eUser.getPassword();
+            password = eUser.getPassword();
 
         String filename = file.getName();
         if (filename.equals("file") || Strings.isEmpty(filename)) {
@@ -52,27 +53,18 @@ public class UserProfileService extends UserService {
         }
         User user = new User(id, username, email, passwordEncoder.encode(password), filename);
 
-        if (file != null && !file.getOriginalFilename().isEmpty()) {
-            File uploadDir = new File(uploadPath);
 
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
-
+        if (!file.isEmpty()) {
             String uuidFile = UUID.randomUUID().toString();
             String resultFilename = uuidFile + "." + file.getOriginalFilename();
 
-            file.transferTo(new File(uploadPath + "/" + resultFilename));
 
             user.setAvatar(resultFilename);
 
-            cloudinary.uploader().upload(uploadPath+"\\"+resultFilename,
-                    ObjectUtils.asMap( "use_filename", "true",
-                            "unique_filename", "false"));
-//            cloudinary.url().transformation(new Transformation().width(70).height(53).crop("scale")).imageTag(resultFilename);
-            FileUtils.fileDelete(uploadPath+"\\"+resultFilename);
+            cloudinary.uploader().upload(file.getBytes(),
+                    ObjectUtils.asMap("use_filename", "true",
+                            "unique_filename", "false", "filename", resultFilename));
         }
-
 
         user.setActive(true);
         user.setRoles(eUser.getRoles());
@@ -81,7 +73,6 @@ public class UserProfileService extends UserService {
 
 
     }
-
 
 
 }
