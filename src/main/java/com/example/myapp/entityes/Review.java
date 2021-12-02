@@ -49,6 +49,7 @@ public class Review {
     private List<ReviewPhotos> photos;
 
 
+
     @OneToMany(mappedBy = "review", fetch = FetchType.LAZY)
     private List<Comments> comments;
 

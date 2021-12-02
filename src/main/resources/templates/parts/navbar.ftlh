@@ -1,6 +1,6 @@
 <#include "know.ftlh">
 <nav class="navbar navbar-expand-lg navbar-themed">
-    <a class="navbar-brand" href="/">Myapp</a>
+    <a class="navbar-brand" href="/">Review!ON!</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -21,23 +21,25 @@
                         Reviews
                     </a>
                     <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="/review/books">Books reviews</a></li>
+                        <li><a class="dropdown-item" href="/review/films">Films reviews</a></li>
+                        <li><a class="dropdown-item" href="/review/games">Games reviews</a></li>
+                        <li><a class="dropdown-item" href="/review/serials">Serials reviews</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="/review/all">All reviews</a></li>
                     </ul>
                 </li>
 
-            <form action="/src" method="get" class="d-flex">
-                <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
 
             <#if isAdmin>
                 <li class="nav-item"><a class="nav-link" href="/userlist"> User list</a></li>
             </#if>
-            <button class="btn btn-primary" onclick="myFunction()">Switch theme</button>
 
+
+            <form action="/src" method="get" class="d-flex">
+                <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
         </ul>
         <#if user??>
         <form action="/logout" method="post">

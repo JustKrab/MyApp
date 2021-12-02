@@ -2,6 +2,8 @@ package com.example.myapp.entityes;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 
@@ -11,6 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
+@Indexed
 @Table(name = "comments")
 public class Comments {
 
@@ -18,6 +21,7 @@ public class Comments {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Field
     @Column(columnDefinition = "VARCHAR(2048) NOT NULL")
     private String text;
 

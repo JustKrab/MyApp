@@ -46,7 +46,7 @@
             <tbody id="reviews">
             <#list reviews as review>
                 <tr>
-                    <td><a class="d-inline-block text-truncate" style="max-width: 150px; color: #c1c1c1">${review.theme}</a></td>
+                    <td><a class="d-inline-block text-truncate" style="max-width: 150px">${review.theme}</a></td>
                     <td>${review.rating}/10</td>
                     <td><a class="d-inline-block text-truncate" style="max-width: 150px; color: dodgerblue"
                            href="/review/${review.id}">${review.title}</a></td>

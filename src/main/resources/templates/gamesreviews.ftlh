@@ -3,7 +3,7 @@
 <@h.hah>
 
     <div class="container mt-3 ">
-        <h2>All reviews: </h2>
+        <h2>Games reviews: </h2>
         <input class="form-control" id="filter" type="text" placeholder="Search..">
         <br>
         <table class="table table-bordered">

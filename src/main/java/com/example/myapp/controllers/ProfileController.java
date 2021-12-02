@@ -1,6 +1,7 @@
 package com.example.myapp.controllers;
 
 
+import com.example.myapp.entityes.Review;
 import com.example.myapp.entityes.User;
 import com.example.myapp.services.UserProfileService;
 import com.example.myapp.services.UserReviewRatingService;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/profile")
@@ -33,9 +36,12 @@ public class ProfileController {
 
         User usr = userProfileService.findById(user.getId());
         usr.setUsername(String.format("%s (%s ❤)",user.getUsername(),userReviewRatingService.allLikes(user)));
-        String name = usr.getUsername();
+        List<Review> rated = userProfileService.findReviewByAuthor(user).stream()
+                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
+                .collect(Collectors.toList());
+
         model.addAttribute("user", usr);
-        model.addAttribute("reviews", userProfileService.findReviewByAuthor(user));
+        model.addAttribute("reviews", rated);
 
         return "profile";
     }

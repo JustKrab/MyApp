@@ -1,5 +1,6 @@
 package com.example.myapp.services;
 
+import com.example.myapp.entityes.Comments;
 import com.example.myapp.entityes.Review;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,19 +50,17 @@ public class SearchService {
         Query luceneQuery = qb.keyword().fuzzy().withEditDistanceUpTo(2).withPrefixLength(1).onFields("theme","text","title")
                 .matching(searchTerm).createQuery();
 
-//        FuzzyQuery fuzzyQuery = new FuzzyQuery(new Term("theme",searchTerm));
-//        fuzzyQuery.
+
         javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Review.class);
 
-        // execute search
 
         List<Review> ReviewList = null;
         try {
             ReviewList = jpaQuery.getResultList();
         } catch (NoResultException nre) {
-            ;// do nothing
 
         }
+
 
         return ReviewList;
 

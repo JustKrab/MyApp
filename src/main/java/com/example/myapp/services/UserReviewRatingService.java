@@ -17,43 +17,46 @@ public class UserReviewRatingService {
     private UserReviewRatingRepo userReviewRatingRepo;
 
 
-    public void estimate(User user, String rating, String liked, Review review){
+    public void estimate(User user, String rating, String liked, Review review) {
 
-
-        UserReviewRating userReviewRating = new UserReviewRating(rating,liked,user,review);
+        UserReviewRating userReviewRating = new UserReviewRating(rating, liked, user, review);
         userReviewRatingRepo.save(userReviewRating);
     }
 
-    public UserReviewRating findByUser(User user,Long id){
-        return userReviewRatingRepo.findByUserAndReviewId(user,id);
+    public void removeById(Long id) {
+        userReviewRatingRepo.removeByReviewId(id);
     }
 
-    public Integer likesCount(Long id){
-       List<UserReviewRating> all = userReviewRatingRepo.findByReviewId(id);
-        return   all.stream()
-                .mapToInt(value ->Integer.parseInt(value.getLiked()))
+    public UserReviewRating findByUser(User user, Long id) {
+        return userReviewRatingRepo.findByUserAndReviewId(user, id);
+    }
+
+    public Integer likesCount(Long id) {
+        List<UserReviewRating> all = userReviewRatingRepo.findByReviewId(id);
+        return all.stream()
+                .mapToInt(value -> Integer.parseInt(value.getLiked()))
                 .sum();
 
     }
 
-    public Integer allLikes(User user){
+    public Integer allLikes(User user) {
         List<UserReviewRating> all = userReviewRatingRepo.findByUser(user);
-        return   all.stream()
-                .mapToInt(value ->Integer.parseInt(value.getLiked()))
+        return all.stream()
+                .mapToInt(value -> Integer.parseInt(value.getLiked()))
                 .sum();
 
     }
 
-    public String usersRating(Long id){
+    public String usersRating(Long id) {
         List<UserReviewRating> all = userReviewRatingRepo.findByReviewId(id);
         double average = all.stream()
                 .mapToInt(value -> Integer.parseInt(value.getUserRating()))
                 .average()
                 .orElse(-10);
-        return average==-10?"NaN":String.format("%.2f",average);
+        return average == -10 ? "NaN" : String.format("%.2f", average);
     }
 
-    public  List<UserReviewRating> findAllByReviewId(Long id){
+    public List<UserReviewRating> findAllByReviewId(Long id) {
         return userReviewRatingRepo.findByReviewId(id);
     }
 

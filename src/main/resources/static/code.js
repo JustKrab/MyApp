@@ -1,13 +1,3 @@
-// $("#file-1").fileinput({
-//     theme: 'fa',
-//     uploadUrl: '#',
-//     allowedFileExtensions: ['jpg', 'png'],
-//     overwriteInitial: false,
-//     maxFileSize:2000,
-//     slugCallback: function (filename) {
-//         return filename.replace('(', '_').replace(']', '_');
-//     }
-// });
 
 $(document).ready(function(){
     $("#filter").on("keyup", function() {
@@ -18,9 +8,11 @@ $(document).ready(function(){
     });
 });
 
-// $('.switch').click(()=>{
-//     document.getElementById('toggle').classList.add('bootstrap')})
 
+
+if ( window.history.replaceState ){
+    window.history.replaceState( null, null, window.location.href );
+}
 function myFunction() {
     var element = document.getElementById("toggle");
     element.classList.toggle("bootstrap");

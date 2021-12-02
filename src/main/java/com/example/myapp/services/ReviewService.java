@@ -7,7 +7,9 @@ import com.example.myapp.repos.ReviewRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -21,6 +23,9 @@ public class ReviewService {
 
     @Autowired
     private CommentsService commentsService;
+
+    @Autowired
+    private UserReviewRatingService userReviewRatingService;
 
     public Review editReview(Long id, String text, String title, User author, String theme, String rating, Groups groups) {
 
@@ -53,12 +58,34 @@ public class ReviewService {
 
     public void removeReviewById(Long id) throws Exception {
 
+        userReviewRatingService.removeById(id);
         commentsService.removeByReviewId(id);
         reviewPhotoService.removePhotoBuReviewId(id);
         reviewRepo.removeReviewById(id);
     }
 
+    public List<Review> findLastAdded(){
+        List<Review> last = findAll();
+        Comparator<Review> comparator = Comparator.comparing(Review::getId);
+        last.sort(comparator);
+        List<Review> list = last.subList(Math.max(last.size() - 3, 0), last.size());
+        Collections.reverse(list);
+        return list;
+    }
+
     public List<Review> findAll() {
         return reviewRepo.findAll();
     }
+
+    public List<Review> findBooks() {
+        return reviewRepo.findReviewByGroups(Groups.BOOKS);
+    }
+
+    public List<Review> findGames() {
+        return reviewRepo.findReviewByGroups(Groups.GAMES);
+    }
+
+    public List<Review> findSerials() { return reviewRepo.findReviewByGroups(Groups.SERIALS); }
+
+    public List<Review> findFilms() { return reviewRepo.findReviewByGroups(Groups.FILMS);}
 }

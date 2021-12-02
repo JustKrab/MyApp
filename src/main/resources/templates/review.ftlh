@@ -60,53 +60,57 @@
 
             <br>
             <#if user??>
-                <h3>U can rate this review</h3>
-                <div class="form-review-estimate">
-                    <form action="${review.getId()}" method="POST" id="estimate">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="liked" value="0" id="flexRadioDefault1">
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                Dont like it
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="liked" value="1" id="flexRadioDefault2"
-                                   checked>
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                I liked it
-                            </label>
-                        </div>
-                        <div class="star-rating clearfix">
-                            <div class="star-rating__wrap">
-                                <div class="star-rating__rotate">
-                                    <input class="star-rating__input" id="star-rating-5" type="radio" name="rating"
-                                           value="5">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-5"
-                                           title="5 out of 10 stars"></label>
-                                    <input class="star-rating__input" id="star-rating-4" type="radio" name="rating"
-                                           value="4">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-4"
-                                           title="4 out of 10 stars"></label>
-                                    <input class="star-rating__input" id="star-rating-3" type="radio" name="rating"
-                                           value="3">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-3"
-                                           title="3 out of 10 stars"></label>
-                                    <input class="star-rating__input" id="star-rating-2" type="radio" name="rating"
-                                           value="2">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-2"
-                                           title="2 out of 10 stars"></label>
-                                    <input class="star-rating__input" id="star-rating-1" type="radio" name="rating"
-                                           value="1">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1"
-                                           title="1 out of 10 stars"></label>
+
+                    <h3>U can rate this review</h3>
+                    <div class="form-review-estimate">
+                        <form action="${review.getId()}" method="POST" id="estimate">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="liked" value="0"
+                                       id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Dont like it
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="liked" value="1"
+                                       id="flexRadioDefault2"
+                                       checked>
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    I liked it
+                                </label>
+                            </div>
+                            <div class="star-rating clearfix">
+                                <div class="star-rating__wrap">
+                                    <div class="star-rating__rotate">
+                                        <input class="star-rating__input" id="star-rating-5" type="radio" name="rating"
+                                               value="5">
+                                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-5"
+                                               title="5 out of 10 stars"></label>
+                                        <input class="star-rating__input" id="star-rating-4" type="radio" name="rating"
+                                               value="4">
+                                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-4"
+                                               title="4 out of 10 stars"></label>
+                                        <input class="star-rating__input" id="star-rating-3" type="radio" name="rating"
+                                               value="3">
+                                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-3"
+                                               title="3 out of 10 stars"></label>
+                                        <input class="star-rating__input" id="star-rating-2" type="radio" name="rating"
+                                               value="2">
+                                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-2"
+                                               title="2 out of 10 stars"></label>
+                                        <input class="star-rating__input" id="star-rating-1" type="radio" name="rating"
+                                               value="1">
+                                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1"
+                                               title="1 out of 10 stars"></label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                        <br>
-                        <button class="btn btn-primary" id="est" type="submit">Estimate</button>
-                    </form>
-                </div>
+                            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                            <br>
+                            <button class="btn btn-primary" id="est" type="submit">Estimate</button>
+                        </form>
+                    </div>
+
                 <br>
                 <h3>Add comment</h3>
                 <br>
@@ -129,11 +133,12 @@
                 <ol class="list-group list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
-                            <div class="fw-bold"><strong style="color: dodgerblue">${comment.getUser().getUsername()}</strong>
+                            <div class="fw-bold"><strong
+                                        style="color: dodgerblue">${comment.getUser().getUsername()}</strong>
                             </div>
                             <a>${comment.text}</a>
                         </div>
-                        <br>
+                        <span class="badge bg-primary rounded-pill">${comment.getTime()}</span>
                     </li>
                 </ol>
             </#list>

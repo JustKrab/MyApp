@@ -232,5 +232,51 @@ public class ReviewController {
         return "allreviews";
     }
 
+    @GetMapping("/books")
+    public String booksReviews(Model model) {
 
+        List<Review> rated = reviewService.findBooks().stream()
+                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
+                .collect(Collectors.toList());
+
+        model.addAttribute("reviews", rated);
+
+        return "booksreviews";
+    }
+
+    @GetMapping("/films")
+    public String filmsReviews(Model model) {
+
+        List<Review> rated = reviewService.findFilms().stream()
+                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
+                .collect(Collectors.toList());
+
+        model.addAttribute("reviews", rated);
+
+        return "filmsreviews";
+    }
+
+    @GetMapping("/serials")
+    public String serialsReviews(Model model) {
+
+        List<Review> rated = reviewService.findSerials().stream()
+                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
+                .collect(Collectors.toList());
+
+        model.addAttribute("reviews", rated);
+
+        return "serialsreviews";
+    }
+
+    @GetMapping("/games")
+    public String gamesReviews(Model model) {
+
+        List<Review> rated = reviewService.findGames().stream()
+                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
+                .collect(Collectors.toList());
+
+        model.addAttribute("reviews", rated);
+
+        return "gamesreviews";
+    }
 }

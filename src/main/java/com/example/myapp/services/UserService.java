@@ -41,11 +41,6 @@ public class UserService implements UserDetailsService {
         return userRepo.findAll();
     }
 
-//    public List<User> all(List<User> users){
-//
-//    }
-
-
     public User findUserByUsername(String username){
         return userRepo.findByUsername(username);
     }
