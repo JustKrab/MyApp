@@ -7,11 +7,15 @@
 
         <a href="/registration">Registration</a>
         <a href="/login">Login</a>
-    </div>
         <#else>
 <div class="container mt-5" style="height: 80vh">
     hi
+    <form action="/src" method="get">
+        <label for="search_input">Search:</label> <input name="search"
+                                                         id="search">
+        </input>
+    </form>
 </div>
     </#if>
-
+    </div>
 </@h.hah>

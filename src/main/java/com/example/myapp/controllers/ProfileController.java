@@ -3,6 +3,7 @@ package com.example.myapp.controllers;
 
 import com.example.myapp.entityes.User;
 import com.example.myapp.services.UserProfileService;
+import com.example.myapp.services.UserReviewRatingService;
 import liquibase.util.file.FilenameUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,18 @@ public class ProfileController {
     @Autowired
     private UserProfileService userProfileService;
 
+    @Autowired
+    private UserReviewRatingService userReviewRatingService;
 
     @GetMapping
     public String getProfile(Model model,
                              @AuthenticationPrincipal User user
                              ) {
 
-        model.addAttribute("user", userProfileService.findById(user.getId()));
+        User usr = userProfileService.findById(user.getId());
+        usr.setUsername(String.format("%s (%s ❤)",user.getUsername(),userReviewRatingService.allLikes(user)));
+        String name = usr.getUsername();
+        model.addAttribute("user", usr);
         model.addAttribute("reviews", userProfileService.findReviewByAuthor(user));
 
         return "profile";

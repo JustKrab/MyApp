@@ -27,6 +27,12 @@
                         <li><a class="dropdown-item" href="/review/all">All reviews</a></li>
                     </ul>
                 </li>
+
+            <form action="/src" method="get" class="d-flex">
+                <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+
             <#if isAdmin>
                 <li class="nav-item"><a class="nav-link" href="/userlist"> User list</a></li>
             </#if>
@@ -34,7 +40,6 @@
 
         </ul>
         <#if user??>
-
         <form action="/logout" method="post">
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <button class="btn btn-primary" type="submit">Sign Out</button>

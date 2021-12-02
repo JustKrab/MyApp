@@ -30,29 +30,32 @@ public class UserReviewRatingService {
 
     public Integer likesCount(Long id){
        List<UserReviewRating> all = userReviewRatingRepo.findByReviewId(id);
-       int count = 0;
-       for (UserReviewRating urr:all){
-           if (urr.getLiked().equals("1")){
-               count++;
-           }
-       }
-       return count;
+        return   all.stream()
+                .mapToInt(value ->Integer.parseInt(value.getLiked()))
+                .sum();
+
+    }
+
+    public Integer allLikes(User user){
+        List<UserReviewRating> all = userReviewRatingRepo.findByUser(user);
+        return   all.stream()
+                .mapToInt(value ->Integer.parseInt(value.getLiked()))
+                .sum();
+
     }
 
     public String usersRating(Long id){
         List<UserReviewRating> all = userReviewRatingRepo.findByReviewId(id);
-        int count = 0;
-        int i = 0;
-        for (UserReviewRating urr:all){
-            count = count + Integer.parseInt(urr.getUserRating());
-            i++;
-        }
-        double avg =(double)count/i;
-        return String.format("%.2f",avg);
+        double average = all.stream()
+                .mapToInt(value -> Integer.parseInt(value.getUserRating()))
+                .average()
+                .orElse(-10);
+        return average==-10?"NaN":String.format("%.2f",average);
     }
 
     public  List<UserReviewRating> findAllByReviewId(Long id){
         return userReviewRatingRepo.findByReviewId(id);
     }
+
 
 }

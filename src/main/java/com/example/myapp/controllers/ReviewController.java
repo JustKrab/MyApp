@@ -4,10 +4,7 @@ import com.example.myapp.entityes.Groups;
 import com.example.myapp.entityes.Review;
 import com.example.myapp.entityes.User;
 import com.example.myapp.entityes.UserReviewRating;
-import com.example.myapp.services.CommentsService;
-import com.example.myapp.services.ReviewPhotoService;
-import com.example.myapp.services.ReviewService;
-import com.example.myapp.services.UserReviewRatingService;
+import com.example.myapp.services.*;
 import com.sun.istack.Nullable;
 import liquibase.util.file.FilenameUtils;
 import org.apache.logging.log4j.util.Strings;
@@ -31,6 +28,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/review")
 public class ReviewController {
 
+    @Autowired
+    private SearchService searchService;
 
     @Autowired
     private ReviewService reviewService;
@@ -71,7 +70,7 @@ public class ReviewController {
                                 @AuthenticationPrincipal User user,
                                 Model model) {
         @Nullable
-        UserReviewRating userReviewRating = userReviewRatingService.findByUser(user,id);
+        UserReviewRating userReviewRating = userReviewRatingService.findByUser(user, id);
 
         if (!Strings.isEmpty(liked) && !Strings.isEmpty(rating) && userReviewRating == null) {
             userReviewRatingService.estimate(user, rating, liked, reviewService.findReviewById(id));
@@ -224,8 +223,14 @@ public class ReviewController {
     @GetMapping("/all")
     public String allReviews(Model model) {
 
-        model.addAttribute("reviews", reviewService.findAll());
+        List<Review> rated = reviewService.findAll().stream()
+                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
+                .collect(Collectors.toList());
+
+        model.addAttribute("reviews", rated);
 
         return "allreviews";
     }
+
+
 }

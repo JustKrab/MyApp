@@ -7,6 +7,7 @@ import com.example.myapp.repos.ReviewRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -57,7 +58,7 @@ public class ReviewService {
         reviewRepo.removeReviewById(id);
     }
 
-    public Iterable<Review> findAll() {
+    public List<Review> findAll() {
         return reviewRepo.findAll();
     }
 }

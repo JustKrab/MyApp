@@ -2,50 +2,65 @@ package com.example.myapp.entityes;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.List;
 
 
 @Getter
 @Setter
 @Entity
+@Indexed
 @Table(name = "review")
+@Transactional
 public class Review {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Field
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String theme;
 
+    @Field
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String title;
 
     @Column(columnDefinition = "VARCHAR(255)")
     private String rating;
 
+    @Field
     @Column(columnDefinition = "VARCHAR(2048) NOT NULL")
     private String text;
 
+    @Field
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     @Enumerated(EnumType.STRING)
     private Groups groups;
 
+
     @OneToMany(mappedBy = "review", fetch = FetchType.LAZY)
     private List<ReviewPhotos> photos;
+
 
     @OneToMany(mappedBy = "review", fetch = FetchType.LAZY)
     private List<Comments> comments;
 
+
     @OneToMany(mappedBy = "review", fetch = FetchType.LAZY)
     private List<UserReviewRating> userRating;
+
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private User author;
+
 
     public String getAuthorName() {
         return author != null ? author.getUsername() : "unknown user";

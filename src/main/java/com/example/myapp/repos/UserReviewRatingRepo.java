@@ -15,5 +15,5 @@ public interface UserReviewRatingRepo extends JpaRepository<UserReviewRating, Lo
 
     List<UserReviewRating> findByReviewId(Long id);
 
-
+    List<UserReviewRating> findByUser(User user);
 }

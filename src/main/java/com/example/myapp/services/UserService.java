@@ -37,11 +37,14 @@ public class UserService implements UserDetailsService {
 
     public User findByUsernameAndId(String username,Long id){return userRepo.findByUsernameAndId(username,id);}
 
-
-
     public List<User> findAll() {
         return userRepo.findAll();
     }
+
+//    public List<User> all(List<User> users){
+//
+//    }
+
 
     public User findUserByUsername(String username){
         return userRepo.findByUsername(username);

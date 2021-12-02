@@ -19,7 +19,7 @@
 
 </head>
 
-<body class="bootstrap-dark" id="toggle">
+<body class="bootstrap" id="toggle">
     <#include "navbar.ftlh">
     <#include "know.ftlh">
     <#nested>
