@@ -19,7 +19,7 @@ import java.util.UUID;
 @Service
 public class ReviewPhotoService {
 
-    @Value("${CLOUDINARY_URL}")
+    @Value("${cloudinary.app}")
     private Cloudinary cloudinary;
 
     @Value("${upload.path}")

@@ -27,7 +27,7 @@ public class UserProfileService extends UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Value("${CLOUDINARY_URL}")
+    @Value("${cloudinary.app}")
     private Cloudinary cloudinary;
 
     @Value("${upload.path}")
