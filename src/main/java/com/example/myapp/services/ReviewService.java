@@ -73,6 +73,17 @@ public class ReviewService {
         return list;
     }
 
+//    public List<Review> findMostPopular(){
+//        List<Review> popular = findAll();
+//        Comparator<Review> comparator = Comparator.comparing(Review::getUserRating);
+//        popular.sort(comparator);
+//        List<Review> list = popular.subList(Math.max(popular.size() - 3, 0), popular.size());
+//        Collections.reverse(list);
+//        return list;
+//    }
+
+
+
     public List<Review> findAll() {
         return reviewRepo.findAll();
     }

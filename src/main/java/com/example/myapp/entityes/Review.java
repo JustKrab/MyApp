@@ -63,6 +63,7 @@ public class Review {
     private User author;
 
 
+
     public String getAuthorName() {
         return author != null ? author.getUsername() : "unknown user";
     }
