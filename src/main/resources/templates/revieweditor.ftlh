@@ -1,5 +1,5 @@
 <#import "parts/common_parts.ftlh" as h>
-
+<#import "/spring.ftl" as spring/>
 <@h.hah>
     ${message?ifExists}
 <style>
@@ -47,13 +47,13 @@
         <form action="/review/${review.id}/edit" method="post" enctype="multipart/form-data">
             <input type="hidden" class="form-control" name="theme" value="${review.getTheme()}"/>
             <input type="hidden" class="form-control" name="group" value="${review.getGroups()}"/>
-            <span style="font-size:15px; color: gray">Edit title: </span>
+            <span style="font-size:15px; color: gray"><@spring.message "edit.title"/> </span>
             <br>
             <div class="form-review">
                 <input type="text" name="title" class="form-control" value="${review.getTitle()}">
             </div>
             <br>
-            <span style="font-size:15px; color: gray">Edit review: </span>
+            <span style="font-size:15px; color: gray"><@spring.message "edit.rv"/>  </span>
             <br>
             <div class="form-review">
 
@@ -63,7 +63,7 @@
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <br>
             <br>
-            <span style="font-size:15px; color: gray">Rating: </span>
+            <span style="font-size:15px; color: gray"><@spring.message "review.rtng"/> </span>
             <div class="star-rating clearfix">
                 <div class="star-rating__wrap">
                     <div class="star-rating__rotate">
@@ -115,7 +115,7 @@
             </div>
             <br>
             <br>
-            <span style="font-size:15px; color: gray">Add more photos: </span>
+            <span style="font-size:15px; color: gray"><@spring.message "photo"/>  </span>
             <div class="file-loading" style="  .fileinput-upload{
             display: none;
         }">

@@ -1,10 +1,11 @@
 <#import "parts/common_parts.ftlh" as h>
-
+<#import "/spring.ftl" as spring/>
 <@h.hah>
     <style>
         @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css');
         @import url('https://cdn.jsdelivr.net/npm/@forevolve/bootstrap-dark@1.0.0/dist/css/toggle-bootstrap-dark.css');
         @import url('https://cdn.jsdelivr.net/npm/@forevolve/bootstrap-dark@1.0.0/dist/css/toggle-bootstrap.css');
+
         html {
             height: 100%;
         }
@@ -14,6 +15,7 @@
             display: grid;
             grid-template-rows: auto 1fr auto;
         }
+
         .star-rating__input {
             display: none;
         }
@@ -30,38 +32,40 @@
             color: yellow;
         }
     </style>
+
     <div class="form-review-add container mt-5">
         ${message?ifExists}
         <form action="/review/add/new" method="post" enctype="multipart/form-data">
-            <span style="font-size:15px; color: gray">Choose group: </span>
+            <span style="font-size:15px; color: gray"><@spring.message "review.grp"/> </span>
             <p><select name="group">
-                    <option selected value="BOOKS">Books</option>
-                    <option value="GAMES">Games</option>
-                    <option value="FILMS">Films</option>
-                    <option value="SERIALS">Serials</option>
+                    <option selected value="BOOKS"><@spring.message "review.grp.book"/></option>
+                    <option value="GAMES"><@spring.message "review.grp.games"/></option>
+                    <option value="FILMS"><@spring.message "review.grp.film"/></option>
+                    <option value="SERIALS"><@spring.message "review.grp.serials"/></option>
                 </select>
                 <br>
                 <br>
-                <span style="font-size:15px; color: gray">Choose Theme: </span>
+                <span style="font-size:15px; color: gray"><@spring.message "review.th"/> </span>
             <div class="form-review">
-                <input type="text" class="form-control" name="theme" placeholder="Theme"/>
+                <input type="text" class="form-control" name="theme" placeholder="<@spring.message "review.th.pl"/>"/>
             </div>
             <br>
-            <span style="font-size:15px; color: gray">Сoncoct a title: </span>
+            <span style="font-size:15px; color: gray"><@spring.message "review.titl"/> </span>
             <div class="form-review">
-                <input type="text" class="form-control" name="title" placeholder="Add title"/>
+                <input type="text" class="form-control" name="title" placeholder="<@spring.message "review.titl.pl"/>"/>
             </div>
             <br>
-            <span style="font-size:15px; color: gray">Your review: </span>
+            <span style="font-size:15px; color: gray"><@spring.message "review.rev"/> </span>
             <br>
             <div class="form-review" style="width: 420px">
-                <textarea cols="200" class="form-control" name="text" placeholder="Write your review"></textarea>
+                <textarea cols="200" class="form-control" name="text"
+                          placeholder="<@spring.message "review.rev.pl"/>"></textarea>
             </div>
             <br>
-            <span style="font-size:15px; color: gray">Rating: </span>
+            <span style="font-size:15px; color: gray"><@spring.message "review.rtng"/> </span>
 
 
-            <div class="star-rating clearfix" >
+            <div class="star-rating clearfix">
                 <div class="star-rating__wrap">
                     <div class="star-rating__rotate">
                         <input class="star-rating__input" id="star-rating-10" type="radio" name="rating" value="10">
@@ -98,18 +102,18 @@
                 </div>
             </div>
             <br>
-<#--            <div class="form-group">-->
-<#--                <div class="file-preview ">-->
-<#--                    <button type="button" class="close fileinput-remove" aria-label="Close">-->
-<#--                        <span aria-hidden="true">×</span>-->
-<#--                    </button>    <div class=" file-drop-zone"><div class="file-drop-zone-title">Drag &amp; drop files here …</div>-->
-<#--                        <div class="file-preview-thumbnails">-->
-<#--                        </div>-->
-<#--                        <div class="clearfix"></div>    <div class="file-preview-status text-center text-success"></div>-->
-<#--                        <div class="kv-fileinput-error file-error-message" style="display: none;"></div>-->
-<#--                    </div>-->
-<#--                </div>-->
-<#--            </div>-->
+            <#--            <div class="form-group">-->
+            <#--                <div class="file-preview ">-->
+            <#--                    <button type="button" class="close fileinput-remove" aria-label="Close">-->
+            <#--                        <span aria-hidden="true">×</span>-->
+            <#--                    </button>    <div class=" file-drop-zone"><div class="file-drop-zone-title">Drag &amp; drop files here …</div>-->
+            <#--                        <div class="file-preview-thumbnails">-->
+            <#--                        </div>-->
+            <#--                        <div class="clearfix"></div>    <div class="file-preview-status text-center text-success"></div>-->
+            <#--                        <div class="kv-fileinput-error file-error-message" style="display: none;"></div>-->
+            <#--                    </div>-->
+            <#--                </div>-->
+            <#--            </div>-->
             <div class="file-loading">
                 <input id="file-1" type="file" name="file" multiple class="file" data-overwrite-initial="false">
             </div>
@@ -118,7 +122,7 @@
             <br>
 
             <div class="form-form-review">
-                <button type="submit" class="btn btn-primary">Add review</button>
+                <button type="submit" class="btn btn-primary"><@spring.message "review.add"/></button>
             </div>
         </form>
     </div>

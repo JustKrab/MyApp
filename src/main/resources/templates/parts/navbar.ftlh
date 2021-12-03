@@ -1,5 +1,5 @@
 <#include "know.ftlh">
-
+<#import "/spring.ftl" as spring/>
 <nav class="navbar navbar-expand-lg navbar-themed">
     <a class="navbar-brand" href="/">Review!ON!</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -11,51 +11,51 @@
         <ul class="navbar-nav mr-auto">
             <#if user??>
                 <li class="nav-item">
-                    <a class="nav-link" href="/profile">Profile</a>
+                    <a class="nav-link" href="/profile"><@spring.message "review.prfl"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/review/add/new">Add review</a>
+                    <a class="nav-link" href="/review/add/new"><@spring.message "review.add"/></a>
                 </li>
             </#if>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Reviews
+                        <@spring.message "review.rvs"/>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                        <li><a class="dropdown-item" href="/review/books">Books reviews</a></li>
-                        <li><a class="dropdown-item" href="/review/films">Films reviews</a></li>
-                        <li><a class="dropdown-item" href="/review/games">Games reviews</a></li>
-                        <li><a class="dropdown-item" href="/review/serials">Serials reviews</a></li>
+                        <li><a class="dropdown-item" href="/review/books"><@spring.message "review.books"/></a></li>
+                        <li><a class="dropdown-item" href="/review/films"><@spring.message "review.films"/></a></li>
+                        <li><a class="dropdown-item" href="/review/games"><@spring.message "review.games"/></a></li>
+                        <li><a class="dropdown-item" href="/review/serials"><@spring.message "review.serials"/></a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/review/all">All reviews</a></li>
+                        <li><a class="dropdown-item" href="/review/all"><@spring.message "review.all"/></a></li>
                     </ul>
                 </li>
 
 
             <#if isAdmin>
-                <li class="nav-item"><a class="nav-link" href="/userlist"> User list</a></li>
+                <li class="nav-item"><a class="nav-link" href="/userlist"><@spring.message "review.usrlist"/></a></li>
             </#if>
 
 
             <form action="/src" method="get" class="d-flex">
-                <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <input class="form-control me-2" type="search" name="search" placeholder="<@spring.message "srch"/>" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit"><@spring.message "srch"/></button>
             </form>
         </ul>
         <#if user??>
         <form action="/logout" method="post">
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <button class="btn btn-primary" type="submit">Sign Out</button>
+            <button class="btn btn-primary" type="submit"><@spring.message "main.logout"/></button>
         </form>
         </#if>
         <#if !user??>
         <form action="/login" method="get">
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <button class="btn btn-primary" type="submit">Login</button>
+            <button class="btn btn-primary" type="submit"><@spring.message "main.login"/></button>
         </form>
             <form action="/registration" method="get">
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                <button class="btn btn-success" type="submit">Register</button>
+                <button class="btn btn-success" type="submit"><@spring.message "main.register"/></button>
             </form>
         </#if>
     </div>

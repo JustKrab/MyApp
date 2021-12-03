@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
@@ -73,15 +74,21 @@ public class ReviewService {
         return list;
     }
 
-//    public List<Review> findMostPopular(){
-//        List<Review> popular = findAll();
-//        Comparator<Review> comparator = Comparator.comparing(Review::getUserRating);
-//        popular.sort(comparator);
-//        List<Review> list = popular.subList(Math.max(popular.size() - 3, 0), popular.size());
-//        Collections.reverse(list);
-//        return list;
-//    }
+    public List<Review> findMostPopular(){
+        List<Review> popular = findAll();
+        Comparator<Review> comparator = Comparator.comparing(val->userReviewRatingService.usersRating(val.getId()));
+        popular.sort(comparator);
+        List<Review> list = popular.subList(Math.max(popular.size() - 3, 0), popular.size());
+        Collections.reverse(list);
+        return list;
+    }
 
+//    public List<Review> findMainReviews(){
+//        List<Review> all = null;
+//        all.addAll(findLastAdded());
+//        all.addAll(findMostPopular());
+//        return all;
+//    }
 
 
     public List<Review> findAll() {

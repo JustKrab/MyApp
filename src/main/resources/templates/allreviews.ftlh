@@ -1,19 +1,19 @@
 <#import "parts/common_parts.ftlh" as h>
-
+<#import "/spring.ftl" as spring/>
 <@h.hah>
 
     <div class="container mt-3 ">
         <h2>All reviews: </h2>
-        <input class="form-control" id="filter" type="text" placeholder="Search..">
+        <input class="form-control" id="filter" type="text" placeholder="<@spring.message "srch"/>..">
         <br>
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Group</th>
-                <th>Theme</th>
-                <th>Rating</th>
-                <th>Title</th>
-                <th>Author</th>
+                <th><@spring.message "review.grp.pl"/></th>
+                <th><@spring.message "review.th.pl"/></th>
+                <th><@spring.message "review.rtng.pl"/></th>
+                <th><@spring.message "review.titl.pl"/></th>
+                <th><@spring.message "review.authr"/></th>
             </tr>
             </thead>
             <tbody id="reviews">
@@ -26,7 +26,7 @@
                     <td><a style="color: dodgerblue" href="/profile/${review.authorName}">${review.authorName}</a></td>
                 </tr>
             <#else>
-                No reviews
+                <@spring.message "norev"/>
             </#list>
             </tbody>
         </table>

@@ -113,14 +113,18 @@ public class ProfileController {
                                   Model model,
                                   @AuthenticationPrincipal User watcher) {
 
-        User user = userProfileService.findUserByUsername(username);
+        User usr = userProfileService.findUserByUsername(username);
+        usr.setUsername(String.format("%s (%s ❤)",usr.getUsername(),userReviewRatingService.allLikes(usr)));
+        List<Review> rated = userProfileService.findReviewByAuthor(userProfileService.findUserByUsername(username)).stream()
+                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
+                .collect(Collectors.toList());
 
-        if (user.getUsername().equals(watcher.getUsername())) {
+        if (usr.getUsername().equals(watcher.getUsername())) {
             return "redirect:/profile";
         }
 
-        model.addAttribute("user", user);
-        model.addAttribute("reviews", userProfileService.findReviewByAuthor(user));
+        model.addAttribute("usr", usr);
+        model.addAttribute("reviews", rated);
 
 
         return "viewprofile";

@@ -53,7 +53,7 @@ public class UserReviewRatingService {
                 .mapToInt(value -> Integer.parseInt(value.getUserRating()))
                 .average()
                 .orElse(-10);
-        return average == -10 ? "NaN" : String.format("%.2f", average);
+        return average == -10 ? "0" : String.format("%.2f", average);
     }
 
     public List<UserReviewRating> findAllByReviewId(Long id) {

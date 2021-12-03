@@ -5,6 +5,7 @@ import com.example.myapp.entityes.User;
 import com.example.myapp.services.ReviewPhotoService;
 import com.example.myapp.services.ReviewService;
 import com.example.myapp.services.UserProfileService;
+import com.example.myapp.services.UserReviewRatingService;
 import liquibase.util.file.FilenameUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/userlist")
 public class AdminController {
 
+    @Autowired
+    private UserReviewRatingService userReviewRatingService;
 
     @Autowired
     private UserProfileService userProfileService;
@@ -50,8 +53,12 @@ public class AdminController {
     public String editUser(@PathVariable String username,
                            Model model) {
 
-        model.addAttribute("usr", userProfileService.findUserByUsername(username));
-        model.addAttribute("reviews", userProfileService.findReviewByAuthor(userProfileService.findUserByUsername(username)));
+        List<Review> rated = userProfileService.findReviewByAuthor(userProfileService.findUserByUsername(username)).stream()
+                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
+                .collect(Collectors.toList());
+
+        model.addAttribute("usr",userProfileService.findUserByUsername(username));
+        model.addAttribute("reviews", rated);
 
         return "profile";
     }
@@ -59,6 +66,7 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{username}/addreview")
     public String UserReview(@PathVariable String username) {
+
         return "addreview";
     }
 

@@ -1,5 +1,5 @@
 <#import "parts/common_parts.ftlh" as h>
-
+<#import "/spring.ftl" as spring/>
 <@h.hah>
     <style>
         @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css');
@@ -19,16 +19,16 @@
     <form method="post" action="/profile/${user.getId()}/edit" enctype="multipart/form-data">
         <div >
             <div >
-                <label >Username:</label>
+                <label ><@spring.message "profile.username"/></label>
                 <div >
                     <label>
-                        <input type="text" name="username" class="form-control" placeholder="Username"/>
+                        <input type="text" name="username" class="form-control" placeholder="<@spring.message "profile.username"/>"/>
                     </label>
                 </div>
             </div>
             <br>
             <div >
-                <label > New password:</label>
+                <label ><@spring.message "profile.pass"/></label>
                 <div >
                     <label>
                         <input type="password" name="password" class="form-control"/>
@@ -37,7 +37,7 @@
             </div>
             <br>
             <div >
-                <label >Confirm password:</label>
+                <label ><@spring.message "profile.pass.conf"/></label>
                 <div >
                     <label>
                         <input type="password" name="passwordConfirm" class="form-control"/>
@@ -52,18 +52,16 @@
                     <input type="email" name="email" class="form-control" placeholder="Email" value="${user.getEmail()}"/>
                 </label>
             </div>
-            <#--            value="${email!''}-->
             <br>
         </div>
             <div >
-                <label>Add avatar:</label>
+                <label><@spring.message "profile.avatar"/></label>
                 <input type="file" name="file">
             </div>
         </div>
         <br>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <button  class="btn btn-primary" type="submit">Edit</button>
-
+        <button  class="btn btn-primary" type="submit"><@spring.message "review.edt"/></button>
     </form>
     </div>
     <script src="/code.js"></script>

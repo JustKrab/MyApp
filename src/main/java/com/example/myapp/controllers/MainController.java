@@ -32,7 +32,11 @@ public class MainController {
                 .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
                 .collect(Collectors.toList());
 
-//        model.addAttribute("rated");
+        List<Review> popular = reviewService.findMostPopular().stream()
+                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
+                .collect(Collectors.toList());
+
+        model.addAttribute("popular",popular);
         model.addAttribute("last",last);
 
         return "index";
@@ -46,8 +50,9 @@ public class MainController {
         List<Review> searchResults = null;
 
         try {
-            searchResults = searchService.fuzzySearch(q);
-
+            searchResults = searchService.fuzzySearch(q).stream()
+                    .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
+                    .collect(Collectors.toList());;
         } catch (Exception ex) {
             return "errorpage";
         }

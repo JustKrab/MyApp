@@ -3,6 +3,7 @@ package com.example.myapp.entityes;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -26,6 +27,7 @@ public class User implements UserDetails , Serializable {
     private String username;
     @Column(columnDefinition = "VARCHAR(255) ")
     private String email;
+    @JsonIgnore
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String password;
     @Column(columnDefinition = "VARCHAR(255) ")
@@ -38,6 +40,8 @@ public class User implements UserDetails , Serializable {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Review> review;
