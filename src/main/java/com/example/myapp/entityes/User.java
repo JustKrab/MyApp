@@ -40,8 +40,6 @@ public class User implements UserDetails , Serializable {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @Enumerated(EnumType.STRING)
-    private AuthProvider provider;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<Review> review;
