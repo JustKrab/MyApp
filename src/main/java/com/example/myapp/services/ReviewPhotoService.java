@@ -23,8 +23,6 @@ public class ReviewPhotoService {
     @Value("${cloudinary.app}")
     private Cloudinary cloudinary;
 
-    @Value("${upload.path}")
-    private String uploadPath;
 
 
     @Autowired

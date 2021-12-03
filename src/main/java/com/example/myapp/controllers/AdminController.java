@@ -48,10 +48,9 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{username}")
     public String editUser(@PathVariable String username,
-                           Model model,
-                           @AuthenticationPrincipal User watcher) {
+                           Model model) {
 
-        model.addAttribute("user", userProfileService.findUserByUsername(username));
+        model.addAttribute("usr", userProfileService.findUserByUsername(username));
         model.addAttribute("reviews", userProfileService.findReviewByAuthor(userProfileService.findUserByUsername(username)));
 
         return "profile";

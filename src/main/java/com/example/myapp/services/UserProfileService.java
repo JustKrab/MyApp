@@ -31,8 +31,6 @@ public class UserProfileService extends UserService {
     @Value("${cloudinary.app}")
     private Cloudinary cloudinary;
 
-    @Value("${upload.path}")
-    private String uploadPath;
 
     public List<Review> findReviewByAuthor(User user) {
         return reviewService.findReviewByAuthor(user);

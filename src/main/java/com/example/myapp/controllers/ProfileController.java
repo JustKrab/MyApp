@@ -40,7 +40,7 @@ public class ProfileController {
                 .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
                 .collect(Collectors.toList());
 
-        model.addAttribute("user", usr);
+        model.addAttribute("usr", usr);
         model.addAttribute("reviews", rated);
 
         return "profile";

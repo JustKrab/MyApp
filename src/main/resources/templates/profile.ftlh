@@ -7,23 +7,23 @@
 
    width:150px;
    height:150px;
-   object-fit:cover;" class="ui-icon-image" src="http://res.cloudinary.com/myreviewapp/image/upload/${user.getAvatar()}"
+   object-fit:cover;" class="ui-icon-image" src="http://res.cloudinary.com/myreviewapp/image/upload/${usr.getAvatar()}"
                  alt="Profile img">
         </div>
 
     <br>
     <div class="user-profile" style="margin: auto">
-        <h5>Hello, ${user.getUsername()}</h5>
+        <h5> ${usr.getUsername()}</h5>
         <br>
-        <h5>Your email: ${user.getEmail()}</h5>
+        <h5>Your email: ${usr.getEmail()}</h5>
         <br>
         <div class="editButton">
-            <button  class="btn btn-primary" onclick="window.location.href = '/profile/${user.getId()}/edit';">Edit profile</button>
+            <button  class="btn btn-primary" onclick="window.location.href = '/profile/${usr.getId()}/edit';">Edit profile</button>
         </div>
         <br>
         <#if isAdmin>
         <div class="addButton">
-            <button  class="btn btn-primary" onclick="window.location.href = '/userlist/${user.getUsername()}/addreview';">Add review</button>
+            <button  class="btn btn-primary" onclick="window.location.href = '/userlist/${usr.getUsername()}/addreview';">Add review</button>
         </div>
         </#if>
         <br>

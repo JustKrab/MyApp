@@ -35,7 +35,6 @@ public class UserService implements UserDetailsService {
         userRepo.save(user);
     }
 
-    public User findByUsernameAndId(String username,Long id){return userRepo.findByUsernameAndId(username,id);}
 
     public List<User> findAll() {
         return userRepo.findAll();

@@ -21,3 +21,12 @@ function myFunction() {
 $("#est").click(function(){
     $('#estimate').hide();
 });
+
+$(document).ready(function () {
+    $("#locales").change(function () {
+        var selectedOption = $("#locales").val();
+        if (selectedOption !== "") {
+            window.location.replace('?lang=' + selectedOption);
+        }
+    })
+})
