@@ -25,12 +25,12 @@ public class User implements UserDetails , Serializable {
     private Long id;
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String username;
-    @Column(columnDefinition = "VARCHAR(255) ")
+    @Column(columnDefinition = "VARCHAR(255)")
     private String email;
     @JsonIgnore
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    @Column(columnDefinition = "VARCHAR(255)")
     private String password;
-    @Column(columnDefinition = "VARCHAR(255) ")
+    @Column(columnDefinition = "VARCHAR(255)")
     private String avatar;
 
     private boolean active;

@@ -2,7 +2,7 @@
 <#include "parts/know.ftlh">
 <#import "/spring.ftl" as spring/>
 <@h.hah>
-    <div class="container mt-5" style="height: 80vh">
+    <div class="container mt-5">
         <h2><@spring.message "review.populars"/></h2>
         <br>
         <table class="table table-bordered" aria-valuemax="3">

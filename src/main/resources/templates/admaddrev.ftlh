@@ -33,12 +33,10 @@
         }
     </style>
 
-
     <div class="form-review-add container mt-5">
         ${message?ifExists}
 
-
-        <form action="/review/add/new" method="post" enctype="multipart/form-data">
+        <form action="/userlist/{username}/addreview" method="post" enctype="multipart/form-data">
 
             <span style="font-size:15px; color: gray"><@spring.message "review.grp"/> </span>
             <p><select name="group">
@@ -46,15 +44,16 @@
                     <option value="GAMES"><@spring.message "review.grp.games"/></option>
                     <option value="FILMS"><@spring.message "review.grp.film"/></option>
                     <option value="SERIALS"><@spring.message "review.grp.serials"/></option>
-                </select></p>
+                </select>
                 <br>
-                <span style="font-size:15px; color: gray"><@spring.message "review.th"/></span>
+                <br>
+                <span style="font-size:15px; color: gray"><@spring.message "review.th"/> </span>
             <div class="form-review">
                 <input type="text" class="form-control" name="theme"
                        placeholder="<@spring.message "review.th.pl"/>"/>
             </div>
             <br>
-            <span style="font-size:15px; color: gray"><@spring.message "review.titl"/></span>
+            <span style="font-size:15px; color: gray"><@spring.message "review.titl"/> </span>
             <div class="form-review">
                 <input type="text" class="form-control" name="title"
                        placeholder="<@spring.message "review.titl.pl"/>"/>
@@ -112,6 +111,7 @@
             </div>
 
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+            <input type="hidden" name="name" value="${usrname}">
             <br>
 
             <div class="form-form-review">
@@ -121,4 +121,5 @@
         </form>
     </div>
 
+    <script src="/code.js"></script>
 </@h.hah>

@@ -9,12 +9,15 @@ import liquibase.util.file.FilenameUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,12 +34,13 @@ public class ProfileController {
 
     @GetMapping
     public String getProfile(Model model,
-                             @AuthenticationPrincipal User user
+                             Principal principal
+//                             @AuthenticationPrincipal OAuth2User oAuth2User
                              ) {
 
-        User usr = userProfileService.findById(user.getId());
-        usr.setUsername(String.format("%s (%s ❤)",user.getUsername(),userReviewRatingService.allLikes(user)));
-        List<Review> rated = userProfileService.findReviewByAuthor(user).stream()
+        User usr = (User) userProfileService.loadUserByUsername(principal.getName());
+        usr.setUsername(String.format("%s (%s ❤)",usr.getUsername(),userReviewRatingService.allLikes(usr)));
+        List<Review> rated = userProfileService.findReviewByAuthor(usr).stream()
                 .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
                 .collect(Collectors.toList());
 

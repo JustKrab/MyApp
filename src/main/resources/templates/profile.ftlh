@@ -3,14 +3,12 @@
 <#import "/spring.ftl" as spring/>
 <@h.hah>
     <div class="container mt-5">
-        <div>
-            <img style="
-
+        <a class="first" href="http://res.cloudinary.com/myreviewapp/image/upload/${usr.getAvatar()}"><img style="
+   top:50%;
+   left:50%;
    width:150px;
    height:150px;
-   object-fit:cover;" class="ui-icon-image" src="http://res.cloudinary.com/myreviewapp/image/upload/${usr.getAvatar()}"
-                 alt="Profile img">
-        </div>
+   object-fit:cover;" src="http://res.cloudinary.com/myreviewapp/image/upload/${usr.getAvatar()}"></a>
 
     <br>
     <div class="user-profile" style="margin: auto">
@@ -67,5 +65,18 @@
     </div>
     </div>
 
+    <script>
+
+        $(document).ready(function () {
+
+            $("#locales").change(function () {
+                var selectedOption = $("#locales").val();
+                if (selectedOption !== "") {
+                    window.location.replace('?lang=' + selectedOption);
+                }
+            })
+
+        })
+    </script>
 
 </@h.hah>

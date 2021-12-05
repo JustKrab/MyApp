@@ -65,14 +65,18 @@ public class AdminController {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{username}/addreview")
-    public String UserReview(@PathVariable String username) {
+    public String UserReview(@PathVariable String username,
+                             Model model) {
 
-        return "addreview";
+        username=userProfileService.findUserByUsername(username).getUsername();
+        model.addAttribute("usrname",username);
+        return "admaddrev";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/{username}/addreview")
     public String addUserReview(@PathVariable String username,
+                                @RequestParam String name,
                                 @RequestParam String text,
                                 @RequestParam String theme,
                                 @RequestParam(defaultValue = "1") String rating,
@@ -82,7 +86,7 @@ public class AdminController {
                                 Map<String, Object> model
     ) throws IOException {
 
-        User user = userProfileService.findUserByUsername(username);
+        User user = userProfileService.findUserByUsername(name);
 
         if (Strings.isEmpty(text)
                 || Strings.isEmpty(theme)
@@ -90,7 +94,7 @@ public class AdminController {
                 || Strings.isEmpty(title)
                 || Strings.isEmpty(group)) {
             model.put("message", "One or more fields are empty!");
-            return "addreview";
+            return "admaddrev";
         }
 
         Review review = reviewService.add(title, text, user, theme, rating, group);
@@ -102,14 +106,14 @@ public class AdminController {
                 if (!"jpg".equalsIgnoreCase(ext)
                         && !"png".equalsIgnoreCase(ext)) {
                     model.put("message", "Invalid format of upload files!");
-                    return "addreview";
+                    return "admaddrev";
                 }
                 reviewPhotoService.uploadFile(file, review);
             }
         }
 
 
-        return "redirect:/userlist/{username}";
+        return "redirect:/userlist";
     }
 
 

@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/review")
 public class ReviewController {
 
+    @Autowired
+    private UserService userService;
     @Autowired
     private SearchService searchService;
 
@@ -117,7 +120,8 @@ public class ReviewController {
 
     @PostMapping("/add/new")
     public String add(
-            @AuthenticationPrincipal User user,
+//            @AuthenticationPrincipal User user,
+            Principal principal,
             @RequestParam String text,
             @RequestParam String theme,
             @RequestParam(defaultValue = "1") String rating,
@@ -127,6 +131,7 @@ public class ReviewController {
             Map<String, Object> model
     ) throws IOException {
 
+        User user = (User) userService.loadUserByUsername(principal.getName());
 
         if (Strings.isEmpty(text)
                 || Strings.isEmpty(theme)

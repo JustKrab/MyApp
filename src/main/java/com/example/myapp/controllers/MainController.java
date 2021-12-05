@@ -52,7 +52,7 @@ public class MainController {
         try {
             searchResults = searchService.fuzzySearch(q).stream()
                     .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
-                    .collect(Collectors.toList());;
+                    .collect(Collectors.toList());
         } catch (Exception ex) {
             return "errorpage";
         }
