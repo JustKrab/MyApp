@@ -15,9 +15,13 @@
                 <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
             </div>
             <br>
-            <#list urls as value,key>
-                <a href="${key}">${value}</a>
-            </#list>
+<#--            <#list urls as key,value>-->
+<#--            <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998; margin-top: 2%"-->
+<#--               href="${value}" role="button">-->
+<#--                <i class="fab me-1 "></i>${key}-->
+<#--            </a>-->
+<#--            </#list>-->
+            <br>
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
             <button class="w-100 btn btn-lg btn-primary" type="submit"><@spring.message "main.login"/></button>
 

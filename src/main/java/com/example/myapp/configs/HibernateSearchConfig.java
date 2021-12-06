@@ -1,6 +1,7 @@
 package com.example.myapp.configs;
 
 import com.example.myapp.services.SearchService;
+import com.example.myapp.services.imp.SearchServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +17,8 @@ public class HibernateSearchConfig {
 
 
     @Bean
-    SearchService hibernateSearchService() {
-        SearchService hibernateSearchService = new SearchService(this.entityManager);
+    SearchServiceImp hibernateSearchService() {
+        SearchServiceImp hibernateSearchService = new SearchServiceImp(this.entityManager);
         hibernateSearchService.initializeHibernateSearch();
         return hibernateSearchService;
     }

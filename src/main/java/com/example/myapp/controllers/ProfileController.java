@@ -1,16 +1,15 @@
 package com.example.myapp.controllers;
 
 
-import com.example.myapp.entityes.Review;
-import com.example.myapp.entityes.User;
+import com.example.myapp.entities.Review;
+import com.example.myapp.entities.User;
 import com.example.myapp.services.UserProfileService;
 import com.example.myapp.services.UserReviewRatingService;
+import com.example.myapp.services.UserService;
 import liquibase.util.file.FilenameUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,20 +31,19 @@ public class ProfileController {
     @Autowired
     private UserReviewRatingService userReviewRatingService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping
     public String getProfile(Model model,
                              Principal principal
-//                             @AuthenticationPrincipal OAuth2User oAuth2User
                              ) {
 
-        User usr = (User) userProfileService.loadUserByUsername(principal.getName());
+        User usr = (User) userService.loadUserByUsername(principal.getName());
         usr.setUsername(String.format("%s (%s ❤)",usr.getUsername(),userReviewRatingService.allLikes(usr)));
-        List<Review> rated = userProfileService.findReviewByAuthor(usr).stream()
-                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
-                .collect(Collectors.toList());
 
         model.addAttribute("usr", usr);
-        model.addAttribute("reviews", rated);
+        model.addAttribute("reviews", userProfileService.findReviewByAuthor(usr));
 
         return "profile";
     }
@@ -53,10 +51,9 @@ public class ProfileController {
 
     @GetMapping("/{id}/edit")
     public String EditProfile(Model model,
-                              @PathVariable Long id,
-                              @AuthenticationPrincipal User user) {
+                              @PathVariable Long id) {
 
-        model.addAttribute("user", userProfileService.findUserByUsername(user.getUsername()));
+        model.addAttribute("user", userService.findUserById(id));
 
         return "editprofile";
     }
@@ -64,18 +61,18 @@ public class ProfileController {
     @PostMapping("/{id}/edit")
     public String editReview(
             @PathVariable Long id,
-            @AuthenticationPrincipal User user,
             @RequestParam String username,
             @RequestParam String email,
             @RequestParam String password,
             @RequestParam String passwordConfirm,
             @RequestParam("file") MultipartFile file,
-            Map<String, Object> model) throws IOException {
+            Model model) throws IOException {
 
 
-        if (userProfileService.findAll().contains(userProfileService.findUserByUsername(username)) && !user.getUsername().equals(username)) {
-            model.put("message", "User with this username exists!");
-            return "redirect:/profile/{id}/edit";
+        if (userService.findAll().contains(userService.findUserByUsername(username)) && !userProfileService.findById(id).getUsername().equals(username)) {
+            model.addAttribute("message", "User with this username exists!");
+            model.addAttribute("user", userService.findUserById(id));
+            return "editprofile";
         }
         if (Strings.isEmpty(passwordConfirm))
             passwordConfirm = password;
@@ -84,28 +81,29 @@ public class ProfileController {
                 || Strings.isEmpty(email)
                 || Strings.isEmpty(password)
         ) {
-            model.put("message", "One or more fields are empty!");
-//            return "editprofile";
-            return "redirect:/profile/{id}/edit";
+            model.addAttribute("message", "One or more fields are empty!");
+            model.addAttribute("user", userService.findUserById(id));
+            return "editprofile";
         }
 
         if (!password.equals(passwordConfirm)) {
-            model.put("message", "The password doesn't match");
-            return "redirect:/profile/{id}/edit";
+            model.addAttribute("message", "The password doesn't match");
+            model.addAttribute("user", userService.findUserById(id));
+            return "editprofile";
         }
 
+        String ext = FilenameUtils.getExtension(file.getOriginalFilename());
 
-        String ext = FilenameUtils.getExtension(file.getName());
-
-        if (!ext.isEmpty()) {
+        if (ext != null && !ext.isEmpty()) {
             if (!"jpg".equalsIgnoreCase(ext)
                     && !"png".equalsIgnoreCase(ext)) {
-                model.put("message", "Invalid format of upload files!");
-                return "redirect:/profile/{id}/edit";
+                model.addAttribute("message", "Invalid format of upload files!");
+                model.addAttribute("user", userService.findUserById(id));
+                return "editprofile";
             }
         }
 
-       userProfileService.editProfile(id, username, email, password, file, user);
+        userProfileService.editProfile(id, username, email, password, file, userProfileService.findById(id));
 
         return "redirect:/profile";
     }
@@ -117,18 +115,15 @@ public class ProfileController {
                                   Model model,
                                   @AuthenticationPrincipal User watcher) {
 
-        User usr = userProfileService.findUserByUsername(username);
+        User usr = userService.findUserByUsername(username);
         usr.setUsername(String.format("%s (%s ❤)",usr.getUsername(),userReviewRatingService.allLikes(usr)));
-        List<Review> rated = userProfileService.findReviewByAuthor(userProfileService.findUserByUsername(username)).stream()
-                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
-                .collect(Collectors.toList());
 
         if (usr.getUsername().equals(watcher.getUsername())) {
             return "redirect:/profile";
         }
 
         model.addAttribute("usr", usr);
-        model.addAttribute("reviews", rated);
+        model.addAttribute("reviews", userProfileService.findReviewByAuthor(userService.findUserByUsername(username)));
 
 
         return "viewprofile";

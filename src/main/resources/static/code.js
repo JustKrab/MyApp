@@ -12,6 +12,7 @@ $(document).ready(function(){
 
 $(document).ready(function(){
     let loc = localStorage.getItem('switch');
+    console.log(loc)
     $("a.first").fancybox();
     $("a.two").fancybox();
     $("a.video").fancybox({"frameWidth":520,"frameHeight":400});

@@ -1,4 +1,4 @@
-package com.example.myapp.entityes;
+package com.example.myapp.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +18,6 @@ import java.util.List;
 @Table(name = "review")
 @Transactional
 public class Review {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -61,7 +60,6 @@ public class Review {
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private User author;
-
 
 
     public String getAuthorName() {

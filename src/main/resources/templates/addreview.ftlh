@@ -1,42 +1,8 @@
 <#import "parts/common_parts.ftlh" as h>
 <#import "/spring.ftl" as spring/>
 <@h.hah>
-    <style>
-        @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css');
-        @import url('https://cdn.jsdelivr.net/npm/@forevolve/bootstrap-dark@1.0.0/dist/css/toggle-bootstrap-dark.css');
-        @import url('https://cdn.jsdelivr.net/npm/@forevolve/bootstrap-dark@1.0.0/dist/css/toggle-bootstrap.css');
-
-        html {
-            height: 100%;
-        }
-
-        body {
-            min-height: 100%;
-            display: grid;
-            grid-template-rows: auto 1fr auto;
-        }
-
-        .star-rating__input {
-            display: none;
-        }
-
-        .star-rating__rotate {
-            transform: scaleX(-1);
-            float: left;
-        }
-
-        .star-rating__ico:hover:before,
-        .star-rating__ico:hover ~ .star-rating__ico:before,
-        .star-rating__input:checked ~ .star-rating__ico:before {
-            content: "\f005";
-            color: yellow;
-        }
-    </style>
-
-
     <div class="form-review-add container mt-5">
         ${message?ifExists}
-
 
         <form action="/review/add/new" method="post" enctype="multipart/form-data">
 
@@ -120,5 +86,6 @@
 
         </form>
     </div>
+
 
 </@h.hah>

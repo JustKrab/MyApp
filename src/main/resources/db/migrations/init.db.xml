@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="06-12-2021-1500" author="just" logicalFilePath="init.db.xml">
+
+        <insert tableName="users">
+            <column name="id" value="999"/>
+            <column name="active" valueBoolean="true"/>
+            <column name="avatar" value="user_r0qibf.png"/>
+            <column name="password" value="$2a$12$lLVmlIjSakLeDE.REFXvxe8S8Vm.kN0Jjv4J6a5uSFQ/kQWOenZj2"/>
+            <column name="email" value="vladikall@mail.ru"/>
+            <column name="username" value="admin"/>
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" value="999"/>
+            <column name="roles" value="ADMIN"/>
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" value="999"/>
+            <column name="roles" value="USER"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

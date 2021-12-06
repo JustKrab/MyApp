@@ -3,13 +3,14 @@
 <#import "/spring.ftl" as spring/>
 <@h.hah>
     <div class="container mt-5">
+        <div>
         <a class="first" href="http://res.cloudinary.com/myreviewapp/image/upload/${usr.getAvatar()}"><img style="
    top:50%;
    left:50%;
    width:150px;
    height:150px;
    object-fit:cover;" src="http://res.cloudinary.com/myreviewapp/image/upload/${usr.getAvatar()}"></a>
-
+        </div>
     <br>
     <div class="user-profile" style="margin: auto">
         <h5><@spring.message "profile.hi"/> ${usr.getUsername()}</h5>

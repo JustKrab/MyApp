@@ -14,7 +14,7 @@
         </tr>
         </thead>
         <tbody id="reviews">
-        <#list search?ifExists as reviews>
+        <#list search! as reviews>
             <tr>
                 <td>${reviews.groups}</td>
                 <td><a class="d-inline-block text-truncate" style="max-width: 150px;">${reviews.theme}</a></td>

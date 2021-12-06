@@ -1,11 +1,9 @@
 package com.example.myapp.configs;
 
-import com.example.myapp.entityes.User;
 import com.example.myapp.repos.UserRepo;
-import com.example.myapp.services.CustomOidcUserService;
 import com.example.myapp.services.UserService;
+import com.example.myapp.services.imp.CustomOidcUserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -43,7 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
     private UserRepo userRepo;
 
     @Autowired
-    private CustomOidcUserService customOidcUserService;
+    private CustomOidcUserServiceImp customOidcUserService;
 
     @Bean
     @Override
@@ -70,24 +68,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
                 .oauth2Login()
                 .loginPage("/login")
                 .userInfoEndpoint()
-                .oidcUserService(customOidcUserService)
-                .and()
-                .authorizationEndpoint()
-                .authorizationRequestRepository(authorizationRequestRepository())
-                .and()
-                .tokenEndpoint()
-                .accessTokenResponseClient(accessTokenResponseClient())
-                .and()
-                .defaultSuccessUrl("/profile")
-                .authorizationEndpoint()
-                .baseUri("/oauth2/authorize-client")
-                .authorizationRequestRepository(authorizationRequestRepository())
-                .and()
-                .tokenEndpoint()
-                .accessTokenResponseClient(accessTokenResponseClient())
-                .and()
-                .failureUrl("/")
-                .permitAll();
+                .oidcUserService(customOidcUserService);
+//                .and()
+//                .authorizationEndpoint()
+//                .authorizationRequestRepository(authorizationRequestRepository())
+//                .and()
+//                .tokenEndpoint()
+//                .accessTokenResponseClient(accessTokenResponseClient())
+//                .and()
+//                .defaultSuccessUrl("/profile")
+//                .authorizationEndpoint()
+//                .baseUri("/oauth2/authorize-client")
+//                .authorizationRequestRepository(authorizationRequestRepository())
+//                .and()
+//                .tokenEndpoint()
+//                .accessTokenResponseClient(accessTokenResponseClient())
+//                .and()
+//                .failureUrl("/")
+//                .permitAll();
 
     }
 

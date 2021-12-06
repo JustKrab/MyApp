@@ -1,48 +1,8 @@
 <#import "parts/common_parts.ftlh" as h>
 <#import "/spring.ftl" as spring/>
 <@h.hah>
-    ${message?ifExists}
-<style>
-    @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css');
-    @import url('https://cdn.jsdelivr.net/npm/@forevolve/bootstrap-dark@1.0.0/dist/css/toggle-bootstrap-dark.css');
-    @import url('https://cdn.jsdelivr.net/npm/@forevolve/bootstrap-dark@1.0.0/dist/css/toggle-bootstrap.css');
-    html {
-        height: 100%;
-    }
-
-    body {
-        min-height: 100%;
-        display: grid;
-        grid-template-rows: auto 1fr auto;
-    }
-    .star-rating__input {
-        display: none;
-    }
-
-    .star-rating__rotate {
-        transform: scaleX(-1);
-        float: left;
-    }
-
-    .star-rating__ico:hover:before,
-    .star-rating__ico:hover ~ .star-rating__ico:before,
-    .star-rating__input:checked ~ .star-rating__ico:before {
-        content: "\f005";
-        color: yellow;
-    }
-    .main-section{
-        margin:0 auto;
-        padding: 20px;
-        margin-top: 100px;
-        background-color: #fff;
-        box-shadow: 0px 0px 20px #c1c1c1;
-    }
-    .fileinput-upload{
-        display: none;
-    }
-</style>
-
     <div class="container mt-5">
+        ${message?ifExists}
     <div class="form-review-add">
         <form action="/review/${review.id}/edit" method="post" enctype="multipart/form-data">
             <input type="hidden" class="form-control" name="theme" value="${review.getTheme()}"/>
@@ -103,7 +63,7 @@
             <br>
             <div>
                 <#list photos as photo>
-
+                <a class="first" href="http://res.cloudinary.com/myreviewapp/image/upload/${photo.filename}">
                     <img style="
    top:50%;
    left:50%;
@@ -129,5 +89,4 @@
     </div>
     </div>
 
-    <script src="/code.js"></script>
 </@h.hah>

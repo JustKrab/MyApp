@@ -3,15 +3,16 @@
 <@h.hah>
     <div class="container mt-5">
         <div>
-            <img style="
-
+            <a class="first" href="http://res.cloudinary.com/myreviewapp/image/upload/${usr.getAvatar()}"><img style="
+   top:50%;
+   left:50%;
    width:150px;
    height:150px;
-   object-fit:cover;" class="ui-icon-image" src="http://res.cloudinary.com/myreviewapp/image/upload/${usr.getAvatar()}"
-                 alt="Profile img">
+   object-fit:cover;" src="http://res.cloudinary.com/myreviewapp/image/upload/${usr.getAvatar()}"></a>
         </div>
+        <br>
         <div>
-        <h5>${usr.getUsername()}</h5>
+            <h5>${usr.getUsername()}</h5>
         </div>
         <br>
         <div class="container mt-3">
@@ -29,7 +30,8 @@
                 <tbody id="reviews">
                 <#list reviews as review>
                     <tr>
-                        <td><a class="d-inline-block text-truncate" style="max-width: 150px; color: dodgerblue">${review.theme}</a></td>
+                        <td><a class="d-inline-block text-truncate"
+                               style="max-width: 150px; color: dodgerblue">${review.theme}</a></td>
                         <td>${review.rating}/10</td>
                         <td><a class="d-inline-block text-truncate" style="max-width: 150px; color: dodgerblue"
                                href="/review/${review.id}">${review.title}</a></td>
@@ -39,7 +41,6 @@
                 </#list>
                 </tbody>
             </table>
-
         </div>
     </div>
 </@h.hah>

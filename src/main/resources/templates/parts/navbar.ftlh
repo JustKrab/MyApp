@@ -34,9 +34,9 @@
                 </ul>
             </li>
 
-            <#if isAdmin>
-                <li class="nav-item"><a class="nav-link" href="/userlist"><@spring.message "review.usrlist"/></a></li>
-            </#if>
+<#--            <#if isAdmin>-->
+<#--                <li class="nav-item"><a class="nav-link" href="/userlist"><@spring.message "review.usrlist"/></a></li>-->
+<#--            </#if>-->
 
         </ul>
         <form action="/src" method="get" class="d-flex">

@@ -1,6 +1,6 @@
 package com.example.myapp.repos;
 
-import com.example.myapp.entityes.Comments;
+import com.example.myapp.entities.Comments;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

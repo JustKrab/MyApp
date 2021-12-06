@@ -1,13 +1,11 @@
 package com.example.myapp.repos;
 
-import com.example.myapp.entityes.Groups;
-import com.example.myapp.entityes.Review;
-import com.example.myapp.entityes.User;
+import com.example.myapp.entities.Groups;
+import com.example.myapp.entities.Review;
+import com.example.myapp.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.*;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository

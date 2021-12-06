@@ -1,16 +1,12 @@
 package com.example.myapp.controllers;
 
-import com.example.myapp.entityes.Review;
-import com.example.myapp.entityes.User;
-import com.example.myapp.services.ReviewPhotoService;
-import com.example.myapp.services.ReviewService;
-import com.example.myapp.services.UserProfileService;
-import com.example.myapp.services.UserReviewRatingService;
+import com.example.myapp.entities.Review;
+import com.example.myapp.entities.User;
+import com.example.myapp.services.*;
 import liquibase.util.file.FilenameUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,11 +35,14 @@ public class AdminController {
     @Autowired
     private ReviewPhotoService reviewPhotoService;
 
+    @Autowired
+    private UserService userService;
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public String userList(Model model) {
 
-        model.addAttribute("users", userProfileService.findAll());
+        model.addAttribute("users", userService.findAll());
 
         return "userlist";
     }
@@ -53,12 +52,8 @@ public class AdminController {
     public String editUser(@PathVariable String username,
                            Model model) {
 
-        List<Review> rated = userProfileService.findReviewByAuthor(userProfileService.findUserByUsername(username)).stream()
-                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
-                .collect(Collectors.toList());
-
-        model.addAttribute("usr",userProfileService.findUserByUsername(username));
-        model.addAttribute("reviews", rated);
+        model.addAttribute("usr",userService.findUserByUsername(username));
+        model.addAttribute("reviews", userProfileService.findReviewByAuthor(userService.findUserByUsername(username)));
 
         return "profile";
     }
@@ -68,8 +63,7 @@ public class AdminController {
     public String UserReview(@PathVariable String username,
                              Model model) {
 
-        username=userProfileService.findUserByUsername(username).getUsername();
-        model.addAttribute("usrname",username);
+        model.addAttribute("usrname",userService.findUserByUsername(username).getUsername());
         return "admaddrev";
     }
 
@@ -86,7 +80,7 @@ public class AdminController {
                                 Map<String, Object> model
     ) throws IOException {
 
-        User user = userProfileService.findUserByUsername(name);
+        User user = userService.findUserByUsername(name);
 
         if (Strings.isEmpty(text)
                 || Strings.isEmpty(theme)
@@ -97,7 +91,7 @@ public class AdminController {
             return "admaddrev";
         }
 
-        Review review = reviewService.add(title, text, user, theme, rating, group);
+
 
         List<MultipartFile> filtered = Arrays.stream(files).filter(e -> !Objects.requireNonNull(e.getOriginalFilename()).equals("")).collect(Collectors.toList());
         if (!filtered.isEmpty()) {
@@ -108,9 +102,11 @@ public class AdminController {
                     model.put("message", "Invalid format of upload files!");
                     return "admaddrev";
                 }
-                reviewPhotoService.uploadFile(file, review);
             }
         }
+        Review review = reviewService.add(title, text, user, theme, rating, group);
+        for (MultipartFile file : filtered) {
+        reviewPhotoService.uploadFile(file, review);}
 
 
         return "redirect:/userlist";

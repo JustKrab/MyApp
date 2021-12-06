@@ -1,14 +1,15 @@
 package com.example.myapp.controllers;
 
-import com.example.myapp.entityes.Groups;
-import com.example.myapp.entityes.Review;
-import com.example.myapp.entityes.User;
-import com.example.myapp.entityes.UserReviewRating;
+import com.example.myapp.entities.Groups;
+import com.example.myapp.entities.Review;
+import com.example.myapp.entities.User;
+import com.example.myapp.entities.UserReviewRating;
 import com.example.myapp.services.*;
 import com.sun.istack.Nullable;
 import liquibase.util.file.FilenameUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,8 +30,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/review")
 public class ReviewController {
 
+
     @Autowired
     private UserService userService;
+
+    @Qualifier("searchServiceImp")
     @Autowired
     private SearchService searchService;
 
@@ -120,7 +124,6 @@ public class ReviewController {
 
     @PostMapping("/add/new")
     public String add(
-//            @AuthenticationPrincipal User user,
             Principal principal,
             @RequestParam String text,
             @RequestParam String theme,
@@ -142,7 +145,6 @@ public class ReviewController {
             return "addreview";
         }
 
-        Review review = reviewService.add(title, text, user, theme, rating, group);
 
         List<MultipartFile> filtered = Arrays.stream(files).filter(e -> !Objects.requireNonNull(e.getOriginalFilename()).equals("")).collect(Collectors.toList());
         if (!filtered.isEmpty()) {
@@ -153,10 +155,10 @@ public class ReviewController {
                     model.put("message", "Invalid format of upload files!");
                     return "addreview";
                 }
-                reviewPhotoService.uploadFile(file, review);
             }
         }
-
+        Review review = reviewService.add(title, text, user, theme, rating, group);
+        for (MultipartFile file : filtered) { reviewPhotoService.uploadFile(file, review);}
 
         return "redirect:/profile";
     }
@@ -228,11 +230,7 @@ public class ReviewController {
     @GetMapping("/all")
     public String allReviews(Model model) {
 
-        List<Review> rated = reviewService.findAll().stream()
-                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
-                .collect(Collectors.toList());
-
-        model.addAttribute("reviews", rated);
+        model.addAttribute("reviews", reviewService.findAll());
 
         return "allreviews";
     }
@@ -240,11 +238,7 @@ public class ReviewController {
     @GetMapping("/books")
     public String booksReviews(Model model) {
 
-        List<Review> rated = reviewService.findBooks().stream()
-                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
-                .collect(Collectors.toList());
-
-        model.addAttribute("reviews", rated);
+        model.addAttribute("reviews", reviewService.findBooks());
 
         return "booksreviews";
     }
@@ -252,11 +246,8 @@ public class ReviewController {
     @GetMapping("/films")
     public String filmsReviews(Model model) {
 
-        List<Review> rated = reviewService.findFilms().stream()
-                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
-                .collect(Collectors.toList());
 
-        model.addAttribute("reviews", rated);
+        model.addAttribute("reviews", reviewService.findFilms());
 
         return "filmsreviews";
     }
@@ -264,11 +255,7 @@ public class ReviewController {
     @GetMapping("/serials")
     public String serialsReviews(Model model) {
 
-        List<Review> rated = reviewService.findSerials().stream()
-                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
-                .collect(Collectors.toList());
-
-        model.addAttribute("reviews", rated);
+        model.addAttribute("reviews", reviewService.findSerials());
 
         return "serialsreviews";
     }
@@ -276,11 +263,7 @@ public class ReviewController {
     @GetMapping("/games")
     public String gamesReviews(Model model) {
 
-        List<Review> rated = reviewService.findGames().stream()
-                .peek(v -> v.setTitle(String.format("%s (%s ✪)", v.getTitle(), userReviewRatingService.usersRating(v.getId()))))
-                .collect(Collectors.toList());
-
-        model.addAttribute("reviews", rated);
+        model.addAttribute("reviews", reviewService.findGames());
 
         return "gamesreviews";
     }

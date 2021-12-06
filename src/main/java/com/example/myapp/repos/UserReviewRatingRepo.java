@@ -1,8 +1,8 @@
 package com.example.myapp.repos;
 
 
-import com.example.myapp.entityes.User;
-import com.example.myapp.entityes.UserReviewRating;
+import com.example.myapp.entities.User;
+import com.example.myapp.entities.UserReviewRating;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

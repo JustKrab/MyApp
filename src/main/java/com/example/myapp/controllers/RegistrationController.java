@@ -1,6 +1,6 @@
 package com.example.myapp.controllers;
 
-import com.example.myapp.entityes.User;
+import com.example.myapp.entities.User;
 import com.example.myapp.services.RegistrationService;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
