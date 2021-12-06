@@ -1,7 +1,6 @@
 package com.example.myapp.controllers;
 
 
-import com.example.myapp.entities.Review;
 import com.example.myapp.entities.User;
 import com.example.myapp.services.UserProfileService;
 import com.example.myapp.services.UserReviewRatingService;
@@ -17,9 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/profile")
@@ -124,7 +120,6 @@ public class ProfileController {
 
         model.addAttribute("usr", usr);
         model.addAttribute("reviews", userProfileService.findReviewByAuthor(userService.findUserByUsername(username)));
-
 
         return "viewprofile";
     }

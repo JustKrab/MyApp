@@ -2,7 +2,6 @@ package com.example.myapp.services.imp;
 
 import com.example.myapp.entities.User;
 import com.example.myapp.repos.UserRepo;
-import com.example.myapp.services.UserReviewRatingService;
 import com.example.myapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

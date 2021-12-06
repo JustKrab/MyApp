@@ -15,7 +15,6 @@ public interface ReviewRepo extends JpaRepository<Review, Long> {
 
     List<Review> findReviewByAuthor(User author);
 
-
     List<Review> findReviewByTitle(Review title);
 
     void removeReviewById(Long id);
